@@ -56,10 +56,53 @@ class Linked_list():
               #print("")
             current_node2 = current_node2.get_next_node()
 
-    def swap_nodes(self, node1, node2):
+    def swap_nodes(self, val1, val2):
         
+        if val1 == val2:
+            print("Values are identical, no swap needed.")
+        
+        node_1 = self.get_head_node() 
+        node_2 = self.get_head_node()
+        node_1_prev = None
+        node_2_prev = None
+        
+        while node_1.next_node:
+            if node_1.get_value() == val1:
+                break
+            else:
+                node_1_prev = node_1
+                node_1 = node_1.get_next_node()
+        while node_2.next_node:
+            if node_2.get_value() == val2:
+                break
+            else: 
+                node_2_prev = node_2
+                node_2 = node_2.get_next_node()
+        
+        if node_1 == None or node_2 == None:
+            "Swap not possible, one of the values does not exist."
+
+        if node_1_prev == None:
+            self.head_node = node_2
+            node_2_prev.set_next_node(node_1)
+            node_1.set_next_node(node_2_prev.next_node.get_next_node())
+        elif node_2_prev == None:
+            self.head_node = node_1
+            node_1_prev.set_next_node(node_2)
+            node_2.set_next_node(node_1_prev.next_node.get_next_node())
+        #else:
+        #this apparently doesn't need to be this complicated
             
+
+
+        
+        
+
+
+
                 
+             
+
     def print_list(self):
         current_node = self.head_node
         while current_node.next_node:
@@ -74,10 +117,14 @@ my_list.add_at_head("Eggs")
 my_list.add_at_head("Ham")
 my_list.add_at_head("Ham")
 
-#my_list.print_list()
-
+my_list.print_list()
 
 my_list.remove_nodes_of_value("Ham")
+
+print("")
+my_list.swap_nodes("Eggs", "Toast")
+
+my_list.print_list()
 
 
 
