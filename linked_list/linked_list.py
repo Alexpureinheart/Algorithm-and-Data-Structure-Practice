@@ -27,9 +27,12 @@ class Linked_list():
         return self.head_node
 
     def add_at_head(self, value):
-        old_head = self.head_node
-        new_head = Node(value, old_head)
-        self.head_node = new_head
+        if self.get_head_node() == None:
+            self.head_node = Node(value)
+        else:
+            old_head = self.head_node
+            new_head = Node(value, old_head)
+            self.head_node = new_head
 
     def remove_node(self, value_to_remove):
         if self.head_node.get_value() == value_to_remove:
