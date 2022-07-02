@@ -56,16 +56,18 @@ class Linked_list():
               self.remove_node(value_to_remove)
               counter -= 1
               #print(counter)
-              #self.print_list()
+              #self.stringify_list()
               #print("")
             current_node2 = current_node2.get_next_node()
-
-    def print_list(self):
-        current_node = self.head_node
-        while current_node.next_node:
-            print(current_node.get_value())
+    
+    def stringify_list(self):
+        string_list = ""
+        current_node = self.get_head_node()
+        while current_node:
+            if current_node.get_value() != None:
+                string_list += str(current_node.get_value()) + "\n"
             current_node = current_node.get_next_node()
-        print(current_node.get_value())
+        return string_list
 
 
 class Queue():
