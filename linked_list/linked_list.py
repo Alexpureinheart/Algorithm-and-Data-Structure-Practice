@@ -1,6 +1,5 @@
-import swap_nodes
-
 #need nodes
+
 class Node():
     def __init__(self, value, next_node = None):
         self.value = value
@@ -57,16 +56,51 @@ class Linked_list():
               self.remove_node(value_to_remove)
               counter -= 1
               #print(counter)
-              #self.print_list()
+              #self.stringify_list()
               #print("")
             current_node2 = current_node2.get_next_node()
+    
+    def swap_nodes(val_1, val_2, input_list):
+        node_1 = input_list.get_head_node()
+        node_2 = input_list.get_head_node()
 
-    def print_list(self):
-        current_node = self.head_node
-        while current_node.next_node:
-            print(current_node.get_value())
+        node_1_prev = None
+        node_2_prev = None
+
+        while node_1.next_node:
+            if node_1.get_value() == val_1:
+                break
+            node_1_prev = node_1
+            node_1 = node_1.get_next_node()
+
+        while node_2.next_node:
+            if node_2.get_value() == val_2:
+                break
+            node_2_prev = node_2
+            node_2 = node_2.get_next_node()
+
+        if node_1_prev == None:
+            input_list.head_node = node_2
+        else:
+            node_1_prev.set_next_node(node_2)
+
+        if node_2_prev == None:
+            input_list.head_node = node_1
+        else:
+            node_2_prev.set_next_node(node_1)
+
+        temp = node_1.get_next_node()
+        node_1.set_next_node(node_2.get_next_node())
+        node_2.set_next_node(temp)
+
+    def stringify_list(self):
+        string_list = ""
+        current_node = self.get_head_node()
+        while current_node:
+            if current_node.get_value() != None:
+                string_list += str(current_node.get_value())
             current_node = current_node.get_next_node()
-        print(current_node.get_value())
+        return string_list
 
 
 my_list = Linked_list("Toast")
@@ -76,12 +110,12 @@ my_list.add_at_head("Ham")
 my_list.add_at_head("Ham")
 my_list.add_at_head("Eggs")
 
-my_list.print_list()
+my_list.stringify_list()
 print("")
 
-swap_nodes("Eggs", "Toast", my_list)
 
-my_list.print_list()
+
+my_list.stringify_list()
 
         
  
