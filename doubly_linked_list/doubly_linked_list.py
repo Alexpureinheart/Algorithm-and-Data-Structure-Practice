@@ -12,7 +12,7 @@ class Node():
         return self.value
 
     def get_next_node(self):
-        return self.get_next_node
+        return self.next_node
 
     def get_previous_node(self):
         return self.previous_node
@@ -70,12 +70,22 @@ class Doubly_linked_list():
             self.tail_node.set_previous_node(None)
             self.tail_node = new_tail
             
+    def remove_node(self, value_to_remove):
+        current_node = self.get_head_node()
+        while current_node.get_next_node() != None:
+            if current_node.value == value_to_remove:
+                current_node.previous_node.set_next_node(current_node.next_node)
+                current_node.next_node.set_previous_node(current_node.previous_node)
+            current_node = current_node.get_next_node()
+    
     def print_list(self):
         current_node = self.get_head_node()
         while current_node.next_node:
             print(current_node.get_value())
             current_node = current_node.next_node
         print(current_node.get_value())
+
+    
             
 
 my_doubly = Doubly_linked_list("paper")
@@ -86,6 +96,8 @@ my_doubly.add_to_tail("eraser")
 my_doubly.add_to_tail("chalk")
 my_doubly.print_list()
 print("")
+print(my_doubly.head_node.next_node.get_value())
+print("")
 
 my_doubly.remove_head()
 my_doubly.print_list()
@@ -93,6 +105,12 @@ my_doubly.print_list()
 print("")
 my_doubly.remove_tail()
 my_doubly.print_list()
+
+print("")
+my_doubly.remove_node("paper")
+my_doubly.print_list()
+
+
 
             
 
