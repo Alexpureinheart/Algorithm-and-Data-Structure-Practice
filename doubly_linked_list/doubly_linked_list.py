@@ -1,3 +1,7 @@
+from tkinter.messagebox import NO
+from traceback import print_list
+
+
 class Node():
     def __init__(self, value, previous_node = None, next_node = None):
         self.value = value
@@ -48,6 +52,24 @@ class Doubly_linked_list():
             new_node.set_previous_node(self.get_tail_node())
             self.tail_node = new_node
 
+    def remove_head(self):
+        if self.get_head_node() == None:
+            print("Nothing to remove.")
+        else:
+            new_head = self.head_node.next_node 
+            new_head.set_previous_node(None)
+            self.head_node.set_next_node(None)
+            self.head_node = new_head
+
+    def remove_tail(self):
+        if self.get_tail_node() == None:
+            print("Nothing to remove.")
+        else:
+            new_tail = self.tail_node.previous_node
+            new_tail.set_next_node(None)
+            self.tail_node.set_previous_node(None)
+            self.tail_node = new_tail
+            
     def print_list(self):
         current_node = self.get_head_node()
         while current_node.next_node:
@@ -62,6 +84,14 @@ my_doubly.add_to_head("pencil")
 
 my_doubly.add_to_tail("eraser")
 my_doubly.add_to_tail("chalk")
+my_doubly.print_list()
+print("")
+
+my_doubly.remove_head()
+my_doubly.print_list()
+
+print("")
+my_doubly.remove_tail()
 my_doubly.print_list()
 
             
