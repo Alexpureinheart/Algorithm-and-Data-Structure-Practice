@@ -70,6 +70,8 @@ class Linked_list():
         print(current_node.get_value())
 
 
+#this Queue is unbounded 
+#add max_size attribute to make bounded 
 
 class Queue():
     def __init__(self, value):
