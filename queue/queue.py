@@ -70,9 +70,6 @@ class Linked_list():
         print(current_node.get_value())
 
 
-#this Queue is unbounded 
-#add max_size attribute to make bounded 
-
 class Queue():
     def __init__(self, value, max_size = None):
         self.head = None
@@ -92,8 +89,6 @@ class Queue():
             self.head = new_node
         self.size += 1
         
-        
-
     def dequeue(self):
         if self.size == 0:
             return print("Queue is empty, nothing to dequeue.")
