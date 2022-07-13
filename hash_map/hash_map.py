@@ -23,6 +23,24 @@ class Hash_map:
             self.array[array_index] = [key, value]
             return
 
+        #if collisions occur 
+        number_collisions = 1
+
+        while current_array_value != key:
+            new_hash_code = self.hash(key, number_collisions)
+            new_array_index = self.compressor(new_hash_code)
+            current_array_value = self.array[new_array_index]
+
+            if current_array_value == None:
+                self.array[current_array_value] = [key, value]
+                return 
+
+            if current_array_value == key:
+                self.array[current_array_value] = [key, value]
+                return
+
+            number_collision += 1
+
 
     def retrieve(self, key):
         array_index = self.compressor(self.hash(key))
@@ -34,8 +52,22 @@ class Hash_map:
         if possible_return_value[0] == key:
             return possible_return_value[1]
 
+        if possible_return_value[0] != key:
+            retrieval_collisions = 1
 
-        return self.array[array_index]
+            while(possible_return_value != key):
+                new_hash_code = self.hash(key, retrieval_collisions)
+                retrieval_array_index = self.compressor(new_hash_code)
+                possible_return_value = self.array[retrieval_array_index]
+
+                if possible_return_value == None:
+                    return None
+
+                if possible_return_value != key:
+                    retrieval_collisions += 1
+
+                if possible_return_value[0] == key: 
+                    return possible_return_value[1]
 
 
 nice_hashmap = Hash_map(5)
