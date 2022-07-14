@@ -11,7 +11,7 @@ class HashMap:
     def hash(self, key, collisions_counter = 0):
         encoded_key = key.encode()
         hash_code = sum(encoded_key)
-        return hash_code
+        return hash_code + collisions_counter
 
     def compress(self, hash_code):
         return hash_code % self.array_length
@@ -21,16 +21,18 @@ class HashMap:
         array_index = self.compress(self.hash(key))
         if self.array[array_index] == None: 
             self.array[array_index] = [key, value]
+            return
 
         if self.array[array_index] == key:
             self.array[array_index] = [key, value]
+            return
 
         collisions = 1
 
         while(self.array[array_index] != key):
             new_array_index = self.compress(self.hash(key, collisions))
             
-            if self.array[new_array_index][0] == key:
+            if self.array[new_array_index] == key:
                 self.array[new_array_index] = [key, value]
                 return 
 
@@ -48,9 +50,10 @@ class HashMap:
             return None
 
         if possible_return_value[0] == key:
-            return str(self.array[array_index][1])
+            return str(possible_return_value[1])
 
-        retrieval_collisions = 1
+        if possible_return_value[0] != key:
+            retrieval_collisions = 1
 
         while possible_return_value != key:
             retrieval_array_index = self.compress(self.hash(key, retrieval_collisions))
@@ -59,7 +62,7 @@ class HashMap:
             if possible_return_value == None:
                 return None
 
-            if possible_return_value[0] != key:
+            if possible_return_value != key:
                 retrieval_collisions += 1
 
             if possible_return_value[0] == key:
@@ -68,4 +71,6 @@ class HashMap:
 my_hash_map = HashMap(15)
 my_hash_map.assign("Panda Bear", "Norman")
 print(my_hash_map.retrieve("Panda Bear"))
+my_hash_map.assign("Brown Bear", "Bobbins")
+print(my_hash_map.retrieve("Brown Bear"))
 
