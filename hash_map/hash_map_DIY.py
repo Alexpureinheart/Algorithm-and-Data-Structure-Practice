@@ -15,16 +15,22 @@ class HashMap:
     def assign(self, key, value):
         array_index = self.compress(self.hash(key))
         if self.array[array_index] == None: 
-            self.array[array_index] = value
+            self.array[array_index] = [value]
+
+        if self.array[array_index] == key:
+            self.array[array_index] = [value]
+
+            
 
     def retrieve(self, key):
         array_index = self.compress(self.hash(key))
         if self.array[array_index] == None:
             return None
 
-        if self.array[array_index] == key:
-            return self.array[array_index]
+        if self.array[array_index] != None:
+            return str(self.array[array_index][0])
 
 my_hash_map = HashMap(15)
-my_hash_map.assign()
+my_hash_map.assign("Panda Bear", "Norman")
+print(my_hash_map.retrieve("Panda Bear"))
 
