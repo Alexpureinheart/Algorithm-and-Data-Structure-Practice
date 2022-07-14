@@ -8,7 +8,7 @@ class HashMap:
         self.array_length = array_length
         self.array = [None for x in range(array_length)]
 
-    def hash(self, key):
+    def hash(self, key, collisions_counter = 0):
         encoded_key = key.encode()
         hash_code = sum(encoded_key)
         return hash_code
@@ -48,7 +48,7 @@ class HashMap:
             return None
 
         if possible_return_value[0] == key:
-            return str(self.array[array_index][0])
+            return str(self.array[array_index][1])
 
         retrieval_collisions = 1
 
