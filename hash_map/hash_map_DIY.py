@@ -9,9 +9,22 @@ class HashMap:
         return hash_code
 
     def compress(self, hash_code):
-        array_index = hash_code % self.array_length
-        return array_index
+        return hash_code % self.array_length
+        
 
     def assign(self, key, value):
-        pass
+        array_index = self.compress(self.hash(key))
+        if self.array[array_index] == None: 
+            self.array[array_index] = value
+
+    def retrieve(self, key):
+        array_index = self.compress(self.hash(key))
+        if self.array[array_index] == None:
+            return None
+
+        if self.array[array_index] == key:
+            return self.array[array_index]
+
+my_hash_map = HashMap(15)
+my_hash_map.assign()
 
