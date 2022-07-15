@@ -20,13 +20,18 @@ class Node:
     
 class LinkedList:
     def __init__(self, head_node = None):
-        self.head_node = None
+        self.head_node = head_node
 
     def get_head_node(self):
         return self.head_node
 
     def add_head(self, value):
-        self.head_node = Node(value)
+        if self.head_node == None:
+            self.head_node = Node(value)
+        else: 
+            temp = self.head_node
+            self.head_node = Node(value)
+            self.head_node.next_node = temp
 
     def remove_node(self, value_to_remove):
         if self.head_node.get_value() == value_to_remove:
@@ -61,9 +66,8 @@ class HashMap:
         self.array_size = array_size
         self.array = [LinkedList() for x in range(array_size)]
 
-    def hash(self, key, number_collisions = 0):
-        encoded_key = key.encode()
-        hash_code = sum(encoded_key + number_collisions)
+    def hash(self, key):
+        hash_code = sum(key.encode()) 
         return hash_code 
 
     def compress(self, hash_code):
@@ -73,12 +77,11 @@ class HashMap:
         array_index = self.compress(self.hash(key))
         payload = Node([key, value])
         list_at_array = self.array[array_index]
-
         for node in list_at_array:
             if key == node[0]:
                 node[1] = value
-                return
-        list_at_array.insert(payload)        
+                return        
+        list_at_array.add_head(payload)        
 
     def retrieve(self, key):
         retrieve_index = self.compress(self.hash(key))
@@ -87,6 +90,8 @@ class HashMap:
             if key == node[0]:
                 return node[1]
         return None
+
+
 
 nifty_map = HashMap(10)
 nifty_map.assign("Person", "Man")
