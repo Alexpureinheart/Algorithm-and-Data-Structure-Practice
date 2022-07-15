@@ -1,9 +1,65 @@
 #this hash map uses difference chaining
 
+class Node:
+    def __init__(self, value, next_node = None):
+        self.value = value
+        self.next_node = next_node
+
+    def get_value(self):
+        return self.value
+
+    def set_value(self, new_value):
+        self.value = new_value
+
+    def set_next_node(self, new_next_node):
+        self.next_node = new_next_node
+
+    def get_next_node(self):
+        return self.next_node
+
+    
+class LinkedList:
+    def __init__(self, head_node = None):
+        self.head_node = None
+
+    def get_head_node(self):
+        return self.head_node
+
+    def add_head(self, value):
+        self.head_node = Node(value)
+
+    def remove_node(self, value_to_remove):
+        if self.head_node.get_value() == value_to_remove:
+            if self.head_node.get_next_node() == None:
+                self.head_node = None
+            else:
+                temp = self.get_head_node()
+                self.head_node = self.head_node.get_next_node()
+                temp.next_node = None
+
+        else:
+            current_node = self.get_head_node()
+            while current_node:
+                if current_node.next_node.get_value() == value_to_remove:
+                    if current_node.next_node.next_node == None:
+                        current_node.next_node = None
+                    else:
+                        current_node.next_node = current_node.next_node.get_next_node()
+                current_node = current_node.get_next_node()
+
+    def stringify_list(self):
+        current_node = self.get_head_node()
+        string_list = ""
+        while current_node:
+            if current_node.get_value() != None:
+                string_list += str(current_node.get_value()) + "/n"
+            current_node = current_node.get_next_node()
+        return string_list
+
 class HashMap:
     def __init__(self, array_size):
         self.array_size = array_size
-        self.array = [None for x in range(array_size)]
+        self.array = [LinkedList() for x in range(array_size)]
 
     def hash(self, key):
         encoded_key = key.encode()
@@ -23,6 +79,8 @@ class HashMap:
         if self.array[array_index] == key:
             self.array[array_index] = [key, value]
             return
+
+        
 
     def retrieve(self, key):
         retrieve_index = self.compress(self.hash(key))
