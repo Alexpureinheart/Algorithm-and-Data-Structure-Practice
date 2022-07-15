@@ -61,9 +61,9 @@ class HashMap:
         self.array_size = array_size
         self.array = [LinkedList() for x in range(array_size)]
 
-    def hash(self, key):
+    def hash(self, key, number_collisions = 0):
         encoded_key = key.encode()
-        hash_code = sum(encoded_key)
+        hash_code = sum(encoded_key + number_collisions)
         return hash_code 
 
     def compress(self, hash_code):
@@ -71,25 +71,22 @@ class HashMap:
 
     def assign(self, key, value):
         array_index = self.compress(self.hash(key))
-        
-        if self.array[array_index] == None:
-            self.array[array_index] = [key, value]
-            return 
+        payload = Node([key, value])
+        list_at_array = self.array[array_index]
 
-        if self.array[array_index] == key:
-            self.array[array_index] = [key, value]
-            return
-
-        
+        for node in list_at_array:
+            if key == node[0]:
+                node[1] = value
+                return
+        list_at_array.insert(payload)        
 
     def retrieve(self, key):
         retrieve_index = self.compress(self.hash(key))
-
-        if self.array[retrieve_index] == None:
-            return None
-
-        if self.array[retrieve_index][0] == key:
-            return str(self.array[retrieve_index][1])
+        list_at_index = self.array(retrieve_index)
+        for node in list_at_index:
+            if key == node[0]:
+                return node[1]
+        return None
 
 nifty_map = HashMap(10)
 nifty_map.assign("Person", "Man")
