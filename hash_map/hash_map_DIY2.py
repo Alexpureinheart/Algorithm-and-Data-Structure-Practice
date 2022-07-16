@@ -1,4 +1,7 @@
 #this hash map uses difference chaining
+#this hash map seems to be saving lists as node
+#values though I'm not entirely sure why
+#it works though . . . 
 
 class Node:
     def __init__(self, value, next_node = None):
@@ -32,6 +35,12 @@ class LinkedList:
             temp = self.head_node
             self.head_node = Node(value)
             self.head_node.next_node = temp
+
+    def __iter__(self):
+        current_node = self.head_node
+        while(current_node):
+            yield current_node.get_value()
+            current_node = current_node.get_next_node()
 
     def remove_node(self, value_to_remove):
         if self.head_node.get_value() == value_to_remove:
@@ -85,14 +94,16 @@ class HashMap:
 
     def retrieve(self, key):
         retrieve_index = self.compress(self.hash(key))
-        list_at_index = self.array(retrieve_index)
+        list_at_index = self.array[retrieve_index]
         for node in list_at_index:
-            if key == node[0]:
-                return node[1]
+            if key == node.value[0]:
+                return node.value[1]
         return None
 
 
 
 nifty_map = HashMap(10)
-nifty_map.assign("Person", "Man")
+nifty_map.assign("Person", "Francis")
+nifty_map.assign("Cat", "William")
 print(nifty_map.retrieve("Person"))
+print(nifty_map.retrieve("Cat"))
